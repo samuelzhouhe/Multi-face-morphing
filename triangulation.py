@@ -1,7 +1,7 @@
 import numpy as np 	
 import cv2
 from scipy.spatial import Delaunay
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 img0index = 37
 img1index = 41

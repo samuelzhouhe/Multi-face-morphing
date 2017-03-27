@@ -7,5 +7,22 @@ Contact: zhead@connect.ust.hk
 
 ## Requirements
 OpenCV 3.2.0
+
 Numpy & Scipy
+
+
+## Installation
+'''
+virtualenv morphing
+
+
+source morphing/bin/activate
+
+
+pip install -r requirements.txt
+
+
+python triangulation.py
+'''
+
 
