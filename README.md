@@ -12,17 +12,24 @@ Numpy & Scipy
 
 
 ## Installation
-'''
+Initialize Virtual Environment
+```
 virtualenv morphing
+```
 
-
+Activate Virtual Environment
+```
 source morphing/bin/activate
+```
 
-
+Install Dependencies
+```
 pip install -r requirements.txt
+```
 
-
+Run program
+```
 python triangulation.py
-'''
+```
 
 
