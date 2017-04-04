@@ -1,3 +1,8 @@
+
+'''
+Using Naive Dissolve to generate morphs between two faces
+Copyright: Zhou HE (zhead@connect.ust.hk)
+'''
 import numpy as np 	
 import cv2
 import sys

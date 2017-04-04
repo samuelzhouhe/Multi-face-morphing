@@ -1,5 +1,5 @@
 ## Overview
-2017 Spring HKUST Urop Project of Samuel He
+2017 Spring HKUST UROP Project of Samuel He
 
 Supervised by Professor Pedro V. Sander
 
@@ -31,7 +31,9 @@ pip install -r requirements.txt
 
 Run program
 ```
-python triangulation.py
+python barycentric.py 0 4
+python bilinear.py 0 4
+python dissolve_two_images.py 0 4 
 ```
 
 
