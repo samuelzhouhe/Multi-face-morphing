@@ -1,8 +1,7 @@
 '''
-Using Barycentric Interpolation to generate morphs between two faces
+Using The pixels of img0 and the landmarks of img1 to generate morphs between them
 Copyright: Zhou HE (zhead@connect.ust.hk)
 '''
-
 import numpy as np 	
 import cv2
 from scipy.spatial import Delaunay
@@ -33,22 +32,14 @@ for alpha in alphas:
 	halfwayImage = np.zeros(faceImg0.shape)	#reset
 	face0Landmarks = extractLandmarks(img0index)
 	face1Landmarks = extractLandmarks(img1index)
-	# face0Landmarks = landmarksFromFacepp(img0index)
-	# face1Landmarks = landmarksFromFacepp(img1index)
-	halfwayLandmarks = face0Landmarks * (1-alpha) + face1Landmarks * alpha
-
+	halfwayLandmarks = face1Landmarks
 
 
 	#triangulation on halfway image, based on halfway landmarks
-	halfwayTri = Delaunay(halfwayLandmarks)
+	halfwayTri = Delaunay(face1Landmarks)
 	# plt.triplot(halfwayLandmarks[:,0],halfwayLandmarks[:,1],halfwayTri.simplices.copy())
 	# plt.plot(halfwayLandmarks[:,0], halfwayLandmarks[:,1], 'o')
 	# plt.show()
-
-
-
-
-
 
 
 	#(x,y) is the pixel
@@ -86,23 +77,9 @@ for alpha in alphas:
 				img0y = int(img0coord[1])
 
 				for ch in xrange(3):
-					halfwayImage[x][y][ch] += faceImg0[img0x][img0y][ch] * (1-alpha)
+					halfwayImage[x][y][ch] += faceImg0[img0x][img0y][ch]
 
-
-
-				#go to image1, find THE corresponding pixel
-				img1p0 = face1Landmarks[v0]
-				img1p1 = face1Landmarks[v1]
-				img1p2 = face1Landmarks[v2]
-
-				img1coord = img1p0*barycentric[0][0] + img1p1*barycentric[0][1] + img1p2*barycentric[0][2]
-				img1x = int(img1coord[0])
-				img1y = int(img1coord[1])
-
-				for ch in xrange(3):
-					halfwayImage[x][y][ch] += faceImg1[img1x][img1y][ch] * alpha
-
-
+				#NO PIXEL FROM IMG1
 
 
 
@@ -111,7 +88,7 @@ for alpha in alphas:
 
 
 finalImg = np.concatenate((finalImg,faceImg1),axis = 1)
-cv2.imwrite(str(img0index) + '-' + str(img1index) + '-Barycentric' + '.jpg',finalImg)
+cv2.imwrite(str(img0index) + '-' + str(img1index) + '-Another Base' + '.jpg',finalImg)
 
 
 

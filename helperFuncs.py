@@ -1,5 +1,11 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import requests
+import sys
+import urllib2
+import urllib
+import time
+import json
 
 
 #helper function, which reads file and returns a list of 68 two-tuples.
@@ -33,4 +39,68 @@ def getVerticalSpan(p1,p2,p3):
 
 
 def landmarksFromFacepp(imgindex):
-	pass
+	imgPath = '../../dataSet/test_' + str(imgindex)+'.png'
+
+
+
+	http_url = 'https://api-us.faceplusplus.com/facepp/v3/detect'
+	key = "***"
+	secret = "***"
+	filepath = imgPath
+	boundary = '----------%s' % hex(int(time.time() * 1000))
+	data = []
+	data.append('--%s' % boundary)
+	data.append('Content-Disposition: form-data; name="%s"\r\n' % 'api_key')
+	data.append(key)
+
+
+	data.append('--%s' % boundary)
+	data.append('Content-Disposition: form-data; name="%s"\r\n' % 'api_secret')
+	data.append(secret)
+
+
+	data.append('--%s' % boundary)
+	fr=open(filepath,'rb')
+	data.append('Content-Disposition: form-data; name="%s"; filename="co33.jpg"' % 'image_file')
+	data.append('Content-Type: %s\r\n' % 'application/octet-stream')
+	data.append(fr.read())
+	fr.close()
+
+	data.append('--%s' % boundary)
+	data.append('Content-Disposition: form-data; name="%s"\r\n' % 'return_landmark')
+	data.append(str(1))
+
+	data.append('--%s' % boundary)
+	data.append('Content-Disposition: form-data; name="%s"\r\n' % 'return_attributes')
+	data.append('ethnicity,age,gender')
+
+
+	data.append('--%s--\r\n' % boundary)
+
+	http_body='\r\n'.join(data)
+	#buld http request
+	req=urllib2.Request(http_url)
+	#header
+	req.add_header('Content-Type', 'multipart/form-data; boundary=%s' % boundary)
+	req.add_data(http_body)
+	try:
+		#post data to server
+		resp = urllib2.urlopen(req, timeout=5)
+		#get response
+		qrcont=resp.read()
+		#print (qrcont)
+		res = json.loads(qrcont)
+		majorFace = res['faces'][0]
+		landmarks = majorFace['landmark']
+		print(len(landmarks))
+		returnLandmarks = []
+		for k,v in landmarks.iteritems():
+			#print (str(v['x']) + "  " + str(v['y']))
+			returnLandmarks.append((v['x'],v['y']))
+
+		return np.array(returnLandmarks)
+
+
+
+	except urllib2.HTTPError as e:
+	    print (e.read())
