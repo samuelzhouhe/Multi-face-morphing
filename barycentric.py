@@ -1,10 +1,14 @@
+'''
+Using Barycentric Interpolation to generate morphs between two faces
+Copyright: Zhou HE (zhead@connect.ust.hk)
+'''
+
 import numpy as np 	
 import cv2
 from scipy.spatial import Delaunay
 import sys
 import matplotlib.pyplot as plt
-
-from scipy.interpolate import BarycentricInterpolator
+from helperFuncs import extractLandmarks
 
 img0index = int(sys.argv[1])
 img1index = int(sys.argv[2])
@@ -16,34 +20,7 @@ faceImg1 = cv2.imread('../../dataSet/test_' + str(img1index)+'.png')
 halfwayImage = np.zeros(faceImg0.shape)
 
 
-#helper function, which reads file and returns a list of 68 two-tuples.
-def extractLandmarks(imgindex):
-	with open ('./points.txt') as file:
-		for i in range(imgindex-1):
-			file.readline()
-		
-		#Read landmarks of img1
-		content = file.readline()
-		pointsInputList = content.split()
-		del pointsInputList[0]
-		landmarks = []
-		for i in xrange(len(pointsInputList)/2):
-			xcoord = int(2*float(pointsInputList[2*i]))
-			ycoord = int(2*float(pointsInputList[2*i+1]))
-			landmarks.append((xcoord,ycoord))
-		
-		return np.array(landmarks)
 
-def getHorizontalSpan(p1,p2,p3):
-	leftMost = min(p1[0],p2[0],p3[0])
-	rightMost = max(p1[0],p2[0],p3[0])
-	return rightMost - leftMost
-
-
-def getVerticalSpan(p1,p2,p3):
-	lowerMost = min(p1[1],p2[1],p3[1])
-	upperMost = max(p1[1],p2[1],p3[1])
-	return upperMost - lowerMost
 
 
 finalImg = faceImg0
@@ -86,8 +63,6 @@ for alpha in alphas:
 				p0 = halfwayLandmarks[v0]
 				p1 = halfwayLandmarks[v1]
 				p2 = halfwayLandmarks[v2]
-				xSpan = getHorizontalSpan(p0,p1,p2)
-				ySpan = getVerticalSpan(p0,p1,p2)
 
 				#barycentric interpolation
 				#determine the barycentric coordinates with respect to the three vertices of this simplex
