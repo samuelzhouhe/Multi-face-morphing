@@ -11,7 +11,7 @@ import json
 #helper function, which reads file and returns a list of 68 two-tuples.
 def extractLandmarks(imgindex):
 	with open ('./points.txt') as file:
-		for i in range(imgindex-1):
+		for i in range(imgindex):	#skip the first imgindex-1 lines. e.g. imgindex = 2 means skipping line0 and line1
 			file.readline()
 		
 		#Read landmarks of img1
