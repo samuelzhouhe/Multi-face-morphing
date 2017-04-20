@@ -21,17 +21,17 @@ faceImg0 = cv2.imread('../../dataSet/test_' + str(img0index)+'.png')
 faceImg1 = cv2.imread('../../dataSet/test_' + str(img1index)+'.png')
 halfwayImage = np.zeros(faceImg0.shape)
 #alpha-independent invariants
-face0Landmarks = extractLandmarks(img0index)
-face1Landmarks = extractLandmarks(img1index)
+face0Landmarks = landmarksFromFacepp(img0index)
+face1Landmarks = landmarksFromFacepp(img1index)
 
 face0forDrawing = copy.deepcopy(faceImg0)
 face1forDrawing = copy.deepcopy(faceImg1)
 
 
 finalImg = copy.deepcopy(faceImg0)
-for i in range(face0Landmarks.shape[0]):
-	lm = face0Landmarks[i]
-	cv2.circle(finalImg,(int(lm[0]), int(lm[1])), 2, (0,0,255), 2)
+# for i in range(face0Landmarks.shape[0]):
+# 	lm = face0Landmarks[i]
+# 	cv2.circle(finalImg,(int(lm[0]), int(lm[1])), 2, (0,0,255), 2)
 
 
 #alphas = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
@@ -115,14 +115,14 @@ for alpha in alphas:
 	finalImg = np.concatenate((finalImg,halfwayImage),axis=1)
 
 
-for i in range(face1Landmarks.shape[0]):
-	lm = face1Landmarks[i]
-	cv2.circle(faceImg1,(int(lm[0]), int(lm[1])), 2, (0,0,255), 2)
+# for i in range(face1Landmarks.shape[0]):
+# 	lm = face1Landmarks[i]
+# 	cv2.circle(faceImg1,(int(lm[0]), int(lm[1])), 2, (0,0,255), 2)
 
 
 finalImg = np.concatenate((finalImg,faceImg1),axis = 1)
 
-cv2.imwrite(str(img0index) + '-' + str(img1index) + '-Barycentric' + '.jpg',finalImg)
+cv2.imwrite(str(img0index) + '-' + str(img1index) + '-facepp-Barycentric' + '.jpg',finalImg)
 
 
 

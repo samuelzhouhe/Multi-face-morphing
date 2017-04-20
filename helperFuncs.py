@@ -44,8 +44,8 @@ def landmarksFromFacepp(imgindex):
 
 
 	http_url = 'https://api-us.faceplusplus.com/facepp/v3/detect'
-	key = "***"
-	secret = "***"
+	key = "d3grtG6jlunxqfSbyVcSYaybSkSjPF6S"
+	secret = "3ZPMJebhwWWijLgRnXfqDBR2rYf2Q3kw"
 	filepath = imgPath
 	boundary = '----------%s' % hex(int(time.time() * 1000))
 	data = []

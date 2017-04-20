@@ -8,9 +8,9 @@ Topic: Interactive N-way Facial Image Morphing
 Contact: zhead@connect.ust.hk 
 
 ## Requirements
-OpenCV 
+Python 2.7.10
 
-Numpy & Scipy
+Pip and Virtualenv
 
 
 ## Installation
