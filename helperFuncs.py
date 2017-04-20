@@ -39,7 +39,7 @@ def getVerticalSpan(p1,p2,p3):
 
 
 def landmarksFromFacepp(imgindex):
-	imgPath = '../../dataSet/test_' + str(imgindex)+'.png'
+	imgPath = './dataSet/test_' + str(imgindex)+'.png'
 
 
 

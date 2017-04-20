@@ -31,9 +31,7 @@ pip install -r requirements.txt
 
 Run program
 ```
-python barycentric.py 0 4
-python bilinear.py 0 4
-python dissolve_two_images.py 0 4 
+python barycentric.py 201 203
 ```
 
 

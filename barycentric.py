@@ -17,8 +17,8 @@ img0index = int(sys.argv[1])
 img1index = int(sys.argv[2])
 
 
-faceImg0 = cv2.imread('../../dataSet/test_' + str(img0index)+'.png')
-faceImg1 = cv2.imread('../../dataSet/test_' + str(img1index)+'.png')
+faceImg0 = cv2.imread('./dataSet/test_' + str(img0index)+'.png')
+faceImg1 = cv2.imread('./dataSet/test_' + str(img1index)+'.png')
 halfwayImage = np.zeros(faceImg0.shape)
 #alpha-independent invariants
 face0Landmarks = landmarksFromFacepp(img0index)

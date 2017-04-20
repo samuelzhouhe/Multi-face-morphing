@@ -16,8 +16,8 @@ img1index = int(sys.argv[2])
 #alpha = 0.25	#ranges from 0 to 1. the extend of morph
 
 
-faceImg0 = cv2.imread('../../dataSet/test_' + str(img0index)+'.png')
-faceImg1 = cv2.imread('../../dataSet/test_' + str(img1index)+'.png')
+faceImg0 = cv2.imread('./dataSet/test_' + str(img0index)+'.png')
+faceImg1 = cv2.imread('./dataSet/test_' + str(img1index)+'.png')
 halfwayImage = np.zeros(faceImg0.shape)
 
 
