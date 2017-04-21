@@ -7,7 +7,6 @@ import numpy as np
 import cv2
 from scipy.spatial import Delaunay
 import sys
-import matplotlib.pyplot as plt
 from helperFuncs import extractLandmarks
 from helperFuncs import landmarksFromFacepp
 import copy
@@ -123,6 +122,7 @@ for alpha in alphas:
 finalImg = np.concatenate((finalImg,faceImg1),axis = 1)
 
 cv2.imwrite(str(img0index) + '-' + str(img1index) + '-facepp-Barycentric-10faces' + '.jpg',finalImg)
+
 
 
 
