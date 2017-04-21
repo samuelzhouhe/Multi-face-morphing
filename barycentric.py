@@ -34,8 +34,8 @@ finalImg = copy.deepcopy(faceImg0)
 # 	cv2.circle(finalImg,(int(lm[0]), int(lm[1])), 2, (0,0,255), 2)
 
 
-#alphas = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
-alphas = [0.5]
+alphas = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+#alphas = [0.5]
 
 
 for alpha in alphas:
@@ -122,7 +122,7 @@ for alpha in alphas:
 
 finalImg = np.concatenate((finalImg,faceImg1),axis = 1)
 
-cv2.imwrite(str(img0index) + '-' + str(img1index) + '-facepp-Barycentric' + '.jpg',finalImg)
+cv2.imwrite(str(img0index) + '-' + str(img1index) + '-facepp-Barycentric-10faces' + '.jpg',finalImg)
 
 
 
