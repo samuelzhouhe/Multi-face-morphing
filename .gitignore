@@ -1,3 +1,7 @@
+image1_base_image0_color.py
+bilinear.py
+dissolve_two_images.py
+
 .ipynb_checkpoints/
 .postRequest.sh.swp
 *.jpg
