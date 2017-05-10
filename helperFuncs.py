@@ -11,6 +11,18 @@ import cv2
 from scipy.spatial import Delaunay
 import copy
 
+def convertRGB(img):
+	x = img.shape[0]
+	y = img.shape[1]
+	for i in range(x):
+		for j in range(y):
+			temp = img[i][j][0]
+			img[i][j][0] = img[i][j][2]
+			img[i][j][2] = temp
+	return img
+
+
+
 
 #helper function, which reads file and returns a list of 68 two-tuples.
 def extractLandmarks(imgindex):
@@ -213,3 +225,25 @@ def getAvgColorDiff(img1, img2):
 					totalColorDiff += float(blueDiff+greenDiff+redDiff)/float(3)
 
 		return float(totalColorDiff)/float(numValidPixels)
+
+def getGlobalColorDiff(img1, img2):
+	img0index = img1
+	img1index = img2
+
+	faceImg0 = cv2.imread('./dataSet/test_' + str(img0index)+'.png')
+	faceImg1 = cv2.imread('./dataSet/test_' + str(img1index)+'.png')
+
+	if faceImg0.shape != faceImg1.shape:
+		return -1
+	else:
+		totalColorDiff = 0
+		for x in range(faceImg0.shape[0]):
+			for y in range(faceImg0.shape[1]):
+					blueDiff = abs(faceImg0[y][x][0]-faceImg1[y][x][0])
+					greenDiff = abs(faceImg0[y][x][1]-faceImg1[y][x][1])
+					redDiff = abs(faceImg0[y][x][2]-faceImg1[y][x][2])
+					totalColorDiff += float(blueDiff+greenDiff+redDiff)/float(3)
+
+		numValidPixels = faceImg0.shape[0] * faceImg0.shape[1]
+		return float(totalColorDiff)/float(numValidPixels)
+

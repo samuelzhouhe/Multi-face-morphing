@@ -1,3 +1,7 @@
+.ipynb_checkpoints/
+.postRequest.sh.swp
 *.jpg
 points.txt
 /dataSet
+*.pyc
+/venv
