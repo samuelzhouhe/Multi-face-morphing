@@ -52,19 +52,13 @@ for i in range(len(seq)):
 		# rhsImg = cv2.imread('./dataSet/test_' + str(seq[i+1])+'.png')
 		# finalImg = np.concatenate((finalImg,rhsImg),axis=1)
 
-p1 = Process(target=generateAndWrite, args=(0,1,0.84))
-p2 = Process(target=generateAndWrite, args=(0,1,0.88))
-p1.start()
-p2.start()
-p1.join()
-p2.join()
-# processes = [mp.Process(target=generateAndWrite, args=(job[0],job[1],job[2])) for job in morphJobs]
-# for p in processes:
-#     p.start()
+processes = [mp.Process(target=generateAndWrite, args=(job[0],job[1],job[2])) for job in morphJobs]
+for p in processes:
+    p.start()
 
-# # Exit the completed processes
-# for p in processes:
-#     p.join()
+# Exit the completed processes
+for p in processes:
+    p.join()
 
 # cv2.imwrite(str(endIndex) + 'Best Morph' + '.jpg',finalImg)
 
