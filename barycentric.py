@@ -17,7 +17,8 @@ import matplotlib.pyplot as plt
 # img0index = int(sys.argv[1])
 # img1index = int(sys.argv[2])
 
-def generateMorphBarycentric(img0index, img1index):
+# generate halfway image OF A USER-SPECIFIED ALPHA VALUE by barycentric interpolation
+def generateMorphBarycentric(img0index, img1index, alphaValue):
 	faceImg0 = cv2.imread('./dataSet/test_' + str(img0index)+'.png')
 	faceImg1 = cv2.imread('./dataSet/test_' + str(img1index)+'.png')
 	halfwayImage = np.zeros(faceImg0.shape)
@@ -36,7 +37,7 @@ def generateMorphBarycentric(img0index, img1index):
 
 
 	#alphas = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
-	alphas = [0.5]
+	alphas = [alphaValue]
 
 	returnImg = np.zeros(faceImg0.shape)
 	for alpha in alphas:
@@ -125,5 +126,5 @@ def generateMorphBarycentric(img0index, img1index):
 	return returnImg
 
 
-	cv2.imwrite(str(img0index) + '-' + str(img1index) + '-facepp-Barycentric-10faces' + '.jpg',finalImg)
+	# cv2.imwrite(str(img0index) + '-' + str(img1index) + '-facepp-Barycentric-10faces' + '.jpg',finalImg)
 

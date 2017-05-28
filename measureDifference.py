@@ -12,7 +12,7 @@ from sklearn import preprocessing
 from tsp_solver_greedy import solve_tsp
 
 # there are 201 photos
-def getOptimalSequence(endIndex):
+def getOptimalSequence(endIndex,distortionWeight):
 	TESTSIZE = endIndex
 	mostSimilarPair = [-1,-1]
 	smallestWeightedDiff = 0
@@ -53,7 +53,7 @@ def getOptimalSequence(endIndex):
 
 	distortionDiffs = preprocessing.normalize(distortionDiffs)
 
-	totalDiffs = 0.1*colorDiffs + 0.9*distortionDiffs
+	totalDiffs = (1-distortionWeight)*colorDiffs + distortionWeight*distortionDiffs
 
 
 	# In[19]:
