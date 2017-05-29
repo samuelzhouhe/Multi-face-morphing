@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# from __future__ import division
 import numpy as np
 import requests
 import sys
@@ -10,6 +11,7 @@ import copy
 import cv2
 from scipy.spatial import Delaunay
 import copy
+
 
 def convertRGB(img):
 	x = img.shape[0]
@@ -226,24 +228,63 @@ def getAvgColorDiff(img1, img2):
 
 		return float(totalColorDiff)/float(numValidPixels)
 
-def getGlobalColorDiff(img1, img2):
-	img0index = img1
-	img1index = img2
 
-	faceImg0 = cv2.imread('./dataSet/test_' + str(img0index)+'.png')
-	faceImg1 = cv2.imread('./dataSet/test_' + str(img1index)+'.png')
+# get the bounded facial area of both images.
+# then compute the average color of all PIXELS INSIDE THE BOUNDED AREA
+# return the difference in squared error of pixel differences
+def getGlobalColorDiff(img0, img1):
 
-	if faceImg0.shape != faceImg1.shape:
-		return -1
-	else:
-		totalColorDiff = 0
-		for x in range(faceImg0.shape[0]):
-			for y in range(faceImg0.shape[1]):
-					blueDiff = abs(faceImg0[y][x][0]-faceImg1[y][x][0])
-					greenDiff = abs(faceImg0[y][x][1]-faceImg1[y][x][1])
-					redDiff = abs(faceImg0[y][x][2]-faceImg1[y][x][2])
-					totalColorDiff += float(blueDiff+greenDiff+redDiff)/float(3)
+	print(img0, "   ",img1)
 
-		numValidPixels = faceImg0.shape[0] * faceImg0.shape[1]
-		return float(totalColorDiff)/float(numValidPixels)
+	faceImg0 = cv2.imread('./dataSet/test_' + str(img0)+'.png')
+	faceImg1 = cv2.imread('./dataSet/test_' + str(img1)+'.png')
+
+	#Average color within the bounding area
+	img0triangulation = Delaunay(extractLandmarks(img0))
+	img0validPixels = 0
+	img0faceColor = [float(0),float(0),float(0)]
+	for x in range(faceImg0.shape[0]):
+		for y in range(faceImg0.shape[1]):
+			pixel = np.array([x,y])
+			index = Delaunay.find_simplex(img0triangulation,pixel) #which triangle
+			if index!= -1:
+				img0validPixels += 1
+				img0faceColor[0] += faceImg0[x][y][0]
+				img0faceColor[1] += faceImg0[x][y][1]
+				img0faceColor[2] += faceImg0[x][y][2]
+	for i in range(3):
+		img0faceColor[i] /= float(img0validPixels)
+
+	#Average color within the bounding area
+	img1triangulation = Delaunay(extractLandmarks(img1))
+	img1validPixels = 0
+	img1faceColor = [float(0),float(0),float(0)]
+	for x in range(faceImg1.shape[0]):
+		for y in range(faceImg1.shape[1]):
+			pixel = np.array([x,y])
+			index = Delaunay.find_simplex(img1triangulation,pixel) #which triangle
+			if index!= -1:
+				img1validPixels += 1
+				img1faceColor[0] += faceImg1[x][y][0]
+				img1faceColor[1] += faceImg1[x][y][1]
+				img1faceColor[2] += faceImg1[x][y][2]
+	for i in range(3):
+		img1faceColor[i] /= float(img1validPixels)
+
+	return abs(img0faceColor[0] - img1faceColor[0]) ** 2 + abs(img0faceColor[1] - img1faceColor[1]) ** 2 + abs(img0faceColor[1] - img1faceColor[1]) ** 2
+
+
+	# if faceImg0.shape != faceImg1.shape:
+	# 	return -1
+	# else:
+	# 	totalColorDiff = 0
+	# 	for x in range(faceImg0.shape[0]):
+	# 		for y in range(faceImg0.shape[1]):
+	# 				blueDiff = abs(faceImg0[y][x][0]-faceImg1[y][x][0])
+	# 				greenDiff = abs(faceImg0[y][x][1]-faceImg1[y][x][1])
+	# 				redDiff = abs(faceImg0[y][x][2]-faceImg1[y][x][2])
+	# 				totalColorDiff += float(blueDiff+greenDiff+redDiff)/float(3)
+
+	# 	numValidPixels = faceImg0.shape[0] * faceImg0.shape[1]
+	# 	return float(totalColorDiff)/float(numValidPixels)
 
