@@ -17,7 +17,7 @@ def generateAndWrite(ind1,ind2, alpha):
 	print 'process id:', os.getpid()
 	halfway = generateMorphBarycentric(ind1,ind2, alpha)
 	print("Image generation finished for ", ind1, " ", ind2, " ", alpha)
-	cv2.imwrite("Distortion" + str(distortionWeight) + "-" +str(ind1) + "-" + str(ind2) + "-" + "Alpha-" + str(alpha) + ".jpg", halfway)
+	cv2.imwrite("./imgOutput/Distortion" + str(distortionWeight) + "-" +str(ind1) + "-" + str(ind2) + "-" + "Alpha-" + str(alpha) + ".jpg", halfway)
 	print("Writing finished for ", ind1, " ", ind2, " ", alpha)
 	
 
@@ -32,7 +32,7 @@ def generateAndWrite(ind1,ind2, alpha):
 distortionWeight = 1.0
 
 
-endIndex = 6
+endIndex = 20
 seq = getOptimalSequence(endIndex,distortionWeight)
 # seq = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]	#hard code for now
 # finalImg = cv2.imread('./dataSet/test_' + str(seq[0])+'.png')	# append very first img
