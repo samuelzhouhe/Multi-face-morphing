@@ -234,8 +234,6 @@ def getAvgColorDiff(img1, img2):
 # return the difference in squared error of pixel differences
 def getGlobalColorDiff(img0, img1):
 
-	print(img0, "   ",img1)
-
 	faceImg0 = cv2.imread('./dataSet/test_' + str(img0)+'.png')
 	faceImg1 = cv2.imread('./dataSet/test_' + str(img1)+'.png')
 
