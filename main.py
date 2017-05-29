@@ -35,7 +35,7 @@ print(seq)
 morphJobs = []
 for i in range(len(seq)):
 	if i != len(seq)-1:
-		for alpha in np.arange(0.0,1.04,0.04):
+		for alpha in np.arange(0.0,1.00,0.04):
 			morphJobs.append([seq[i],seq[i+1],alpha,len(morphJobs)])
 		# finalImg = np.concatenate((finalImg,halfway),axis=1)
 		# rhsImg = cv2.imread('./dataSet/test_' + str(seq[i+1])+'.png')
